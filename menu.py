@@ -65,7 +65,7 @@ class Menu(object):
         for blog in blogs:
             print("ID: {}, Title: {}, Author: {}".format(blog['id'], blog['title'], blog['author']))
 
-    def view_blog(self):
+    def _view_blog(self):
         blog_to_see = input('Please enter the Id of the blog you want: ')
         # get the blog based on its id = blog_to_see
         blog = Blog.from_mongo(blog_to_see)
