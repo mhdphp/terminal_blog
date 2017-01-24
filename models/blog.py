@@ -11,24 +11,30 @@ class Blog(object):
         self.description = description
         self.id = uuid.uuid4().hex if id is None else id
 
-    def save_to_mongo(self):
-        Database.insert(collection='blogs',
-                                 data=self.json())
 
     def new_post(self):
         title = input('Enter the post title: ')
         content = input('Enter the content of the post: ')
         date = input('Enter the post date or leave it blank for today (in format DDMMYYYY): ')
+        if date == "":
+            date = datetime.datetime.utcnow()
+        else:
+            date = datetime.datetime.strptime(date, "%d%m%Y")
         post = Post(blog_id = self.id,
                     title = title,
                     content = content,
                     author = self.author,
-                    created_date = datetime.datetime.strptime(date, "%d%m%Y")
+                    created_date = date
                     )
         post.save_to_mongo()
 
-    def get_post(self):
+    def get_posts(self):
         return Post.from_blog(self.id)
+
+
+    def save_to_mongo(self):
+        Database.insert(collection='blogs', data=self.json())
+
 
     def json(self):
         return {

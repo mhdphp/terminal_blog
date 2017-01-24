@@ -9,5 +9,5 @@ blog.save_to_mongo()
 blog.new_post()
 
 from_database = Blog.from_mongo(blog.id)
-print(blog.get_post())
+print(blog.get_posts())
 
